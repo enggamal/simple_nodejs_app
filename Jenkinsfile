@@ -1,20 +1,14 @@
 
 pipeline {
-    agent any
-
+    agent { label 'ec2' }
     stages {
         
-        stage('Pukking Repo Files') {
-            steps {
-              git branch: "${GIT_BRANCH}", credentialsId: 'github', url: 'https://github.com/ahmedKhaled1995/simple_nodejs_app.git'
-            }
-        }
         
         stage('Stage 1') {
             steps {
                 sh ''' 
-                    ls
-                    date
+                   docker build -t gamal .
+                   docker run -dp 5050:3000 gamal 
                 '''
             }
         }
